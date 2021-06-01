@@ -1,5 +1,9 @@
 # Changelog
 
+## current
+
+- Wrap in `<figure class="iframe-embed">` instead of `<div class="iframe-embed">`
+
 ## [27.1.0-next.6](https://github.com/eduflow/ckeditor5-iframe/compare/v27.1.0-next.5...v27.1.0-next.6)
 
 - Rename `(raw-)html-embed` -> `iframe-embed`

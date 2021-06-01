@@ -97,11 +97,11 @@ export default class IframeEmbedEditing extends Plugin {
 
 		editor.conversion.for( 'upcast' ).elementToElement( {
 			view: {
-				name: 'div',
+				name: 'figure',
 				classes: 'iframe-embed'
 			},
 			model: ( viewElement, { writer } ) => {
-				// The div.iframe-embed is registered as a raw content element,
+				// The figure.iframe-embed is registered as a raw content element,
 				// so all it's content is available in a custom property.
 				return writer.createElement( 'rawHtml', {
 					value: viewElement.getChild( 0 ).getAttribute( 'src' )
@@ -113,7 +113,7 @@ export default class IframeEmbedEditing extends Plugin {
 			model: 'rawHtml',
 			view: ( modelElement, { writer } ) => {
 				const url = modelElement.getAttribute( 'value' ) || '';
-				const embedElement = writer.createContainerElement( 'div', {
+				const embedElement = writer.createContainerElement( 'figure', {
 					class: 'iframe-embed'
 				} );
 				writer.insert(
@@ -132,7 +132,7 @@ export default class IframeEmbedEditing extends Plugin {
 			view: ( modelElement, { writer } ) => {
 				let domContentWrapper, state, props;
 
-				const viewContainer = writer.createContainerElement( 'div', {
+				const viewContainer = writer.createContainerElement( 'figure', {
 					class: 'iframe-embed',
 					'data-iframe-embed-label': t( 'Embed link' ),
 					dir: editor.locale.uiLanguageDirection

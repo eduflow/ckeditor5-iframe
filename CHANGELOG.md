@@ -1,5 +1,9 @@
 # Changelog
 
+## [27.1.0-next.2](https://github.com/eduflow/ckeditor5-iframe/compare/v27.1.0-next.1...v27.1.0-next.2)
+
+- Fix icon coloring
+
 ## [27.1.0-next.1](https://github.com/eduflow/ckeditor5-iframe/compare/v27.1.0-next.0...v27.1.0-next.1)
 
 - Rename `HTMLEmbed` -> `IframeEmbed`, `htmlEmbed` -> `iframeEmbed`

@@ -1,5 +1,9 @@
 # Changelog
 
+## [27.1.0-next.3](https://github.com/eduflow/ckeditor5-iframe/compare/v27.1.0-next.2...v27.1.0-next.3)
+
+- Update copy on toolbar button mouseover: "Insert iframe" -> "Embed link"
+
 ## [27.1.0-next.2](https://github.com/eduflow/ckeditor5-iframe/compare/v27.1.0-next.1...v27.1.0-next.2)
 
 - Fix icon coloring

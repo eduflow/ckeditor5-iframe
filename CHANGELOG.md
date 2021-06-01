@@ -1,6 +1,6 @@
 # Changelog
 
-## Current
+## [27.1.0-next.8](https://github.com/eduflow/ckeditor5-iframe/compare/v27.1.0-next.7...v27.1.0-next.8)
 
 - [internal] Rename `rawHtml` -> `iframe`
 

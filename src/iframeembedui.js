@@ -53,7 +53,7 @@ export default class IframeEmbedUI extends Plugin {
 				const widgetWrapper =
           editor.editing.view.document.selection.getSelectedElement();
 
-				widgetWrapper.getCustomProperty( 'rawHtmlApi' ).makeEditable();
+				widgetWrapper.getCustomProperty( 'iframeApi' ).makeEditable();
 			} );
 
 			return view;

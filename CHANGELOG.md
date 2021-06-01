@@ -1,5 +1,9 @@
 # Changelog
 
+## Current
+
+- [internal] Rename `rawHtml` -> `iframe`
+
 ## [27.1.0-next.7](https://github.com/eduflow/ckeditor5-iframe/compare/v27.1.0-next.6...v27.1.0-next.7)
 
 - Wrap in `<figure class="iframe-embed">` instead of `<div class="iframe-embed">`

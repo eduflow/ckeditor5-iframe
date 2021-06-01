@@ -27,9 +27,9 @@ export default class UpdateIframeEmbedCommand extends Command {
 	refresh() {
 		const model = this.editor.model;
 		const selection = model.document.selection;
-		const rawHtmlElement = getSelectedRawHtmlModelWidget( selection );
+		const iframeElement = getSelectedRawHtmlModelWidget( selection );
 
-		this.isEnabled = !!rawHtmlElement;
+		this.isEnabled = !!iframeElement;
 	}
 
 	/**
@@ -56,7 +56,7 @@ export default class UpdateIframeEmbedCommand extends Command {
 function getSelectedRawHtmlModelWidget( selection ) {
 	const selectedElement = selection.getSelectedElement();
 
-	if ( selectedElement && selectedElement.is( 'element', 'rawHtml' ) ) {
+	if ( selectedElement && selectedElement.is( 'element', 'iframe' ) ) {
 		return selectedElement;
 	}
 

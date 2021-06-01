@@ -39,7 +39,7 @@ export default class IframeEmbedEditing extends Plugin {
 
 		editor.config.define( 'iframeEmbed', {
 			showPreviews: false,
-			sanitizeHtml: rawHtml => {
+			sanitizeHtml: iframeHtml => {
 				/**
 				 * When using the iframe embed feature with the `iframeEmbed.showPreviews=true` option, it is strongly recommended to
 				 * define a sanitize function that will clean up the input iframe in order to avoid XSS vulnerability.
@@ -51,7 +51,7 @@ export default class IframeEmbedEditing extends Plugin {
 				logWarning( 'iframe-embed-provide-sanitize-function' );
 
 				return {
-					html: rawHtml,
+					html: iframeHtml,
 					hasChanged: false
 				};
 			}
@@ -65,7 +65,7 @@ export default class IframeEmbedEditing extends Plugin {
 		const editor = this.editor;
 		const schema = editor.model.schema;
 
-		schema.register( 'rawHtml', {
+		schema.register( 'iframe', {
 			isObject: true,
 			allowWhere: '$block',
 			allowAttributes: [ 'value' ]
@@ -103,14 +103,14 @@ export default class IframeEmbedEditing extends Plugin {
 			model: ( viewElement, { writer } ) => {
 				// The figure.iframe-embed is registered as a raw content element,
 				// so all it's content is available in a custom property.
-				return writer.createElement( 'rawHtml', {
+				return writer.createElement( 'iframe', {
 					value: viewElement.getChild( 0 ).getAttribute( 'src' )
 				} );
 			}
 		} );
 
 		editor.conversion.for( 'dataDowncast' ).elementToElement( {
-			model: 'rawHtml',
+			model: 'iframe',
 			view: ( modelElement, { writer } ) => {
 				const url = modelElement.getAttribute( 'value' ) || '';
 				const embedElement = writer.createContainerElement( 'figure', {
@@ -128,7 +128,7 @@ export default class IframeEmbedEditing extends Plugin {
 			triggerBy: {
 				attributes: [ 'value' ]
 			},
-			model: 'rawHtml',
+			model: 'iframe',
 			view: ( modelElement, { writer } ) => {
 				let domContentWrapper, state, props;
 
@@ -175,7 +175,7 @@ export default class IframeEmbedEditing extends Plugin {
 				);
 
 				// API exposed on each raw iframe embed widget so other features can control a particular widget.
-				const rawHtmlApi = {
+				const iframeApi = {
 					makeEditable() {
 						state = Object.assign( {}, state, {
 							isEditable: true
@@ -242,13 +242,13 @@ export default class IframeEmbedEditing extends Plugin {
 					textareaPlaceholder: t( 'Paste in https://...' ),
 
 					onEditClick() {
-						rawHtmlApi.makeEditable();
+						iframeApi.makeEditable();
 					},
 					onSaveClick( newValue ) {
-						rawHtmlApi.save( newValue );
+						iframeApi.save( newValue );
 					},
 					onCancelClick() {
-						rawHtmlApi.cancel();
+						iframeApi.cancel();
 					}
 				};
 
@@ -257,8 +257,8 @@ export default class IframeEmbedEditing extends Plugin {
 					viewContentWrapper
 				);
 
-				writer.setCustomProperty( 'rawHtmlApi', rawHtmlApi, viewContainer );
-				writer.setCustomProperty( 'rawHtml', true, viewContainer );
+				writer.setCustomProperty( 'iframeApi', iframeApi, viewContainer );
+				writer.setCustomProperty( 'iframe', true, viewContainer );
 
 				return toWidget( viewContainer, writer, {
 					widgetLabel: t( 'Embed link' ),

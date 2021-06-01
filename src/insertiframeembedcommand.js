@@ -41,10 +41,10 @@ export default class InsertIframeEmbedCommand extends Command {
 		const model = this.editor.model;
 
 		model.change( writer => {
-			const rawHtmlElement = writer.createElement( 'rawHtml' );
+			const iframeElement = writer.createElement( 'iframe' );
 
-			model.insertContent( rawHtmlElement );
-			writer.setSelection( rawHtmlElement, 'on' );
+			model.insertContent( iframeElement );
+			writer.setSelection( iframeElement, 'on' );
 		} );
 	}
 }
@@ -72,7 +72,7 @@ function isIframeEmbedAllowed( model ) {
 function isIframeEmbedAllowedInParent( selection, schema, model ) {
 	const parent = getInsertPageBreakParent( selection, model );
 
-	return schema.checkChild( parent, 'rawHtml' );
+	return schema.checkChild( parent, 'iframe' );
 }
 
 // Returns a node that will be used to insert a page break with `model.insertContent` to check if a html embed element can be placed there.

@@ -4,36 +4,39 @@
  */
 
 /**
- * @module html-embed/inserthtmlembedcommand
+ * @module iframe-embed/insertiframeembedcommand
  */
 
 import { Command } from 'ckeditor5/src/core';
-import { findOptimalInsertionPosition, checkSelectionOnObject } from 'ckeditor5/src/widget';
+import {
+	findOptimalInsertionPosition,
+	checkSelectionOnObject
+} from 'ckeditor5/src/widget';
 
 /**
- * The insert HTML embed element command.
+ * The insert iframe embed element command.
  *
- * The command is registered by {@link module:html-embed/htmlembedediting~HtmlEmbedEditing} as `'insertHtmlEmbed'`.
+ * The command is registered by {@link module:iframe-embed/iframeembedediting~IframeEmbedEditing} as `'insertIframeEmbed'`.
  *
- * To insert the HTML embed element at the current selection, execute the command:
+ * To insert the iframe embed element at the current selection, execute the command:
  *
- *		editor.execute( 'insertHtmlEmbed' );
+ *		editor.execute( 'insertIframeEmbed' );
  *
  * @extends module:core/command~Command
  */
-export default class InsertHtmlEmbedCommand extends Command {
+export default class InsertIframeEmbedCommand extends Command {
 	/**
-	 * @inheritDoc
-	 */
+   * @inheritDoc
+   */
 	refresh() {
-		this.isEnabled = isHtmlEmbedAllowed( this.editor.model );
+		this.isEnabled = isIframeEmbedAllowed( this.editor.model );
 	}
 
 	/**
-	 * Executes the command, which creates and inserts a new HTML embed element.
-	 *
-	 * @fires execute
-	 */
+   * Executes the command, which creates and inserts a new iframe embed element.
+   *
+   * @fires execute
+   */
 	execute() {
 		const model = this.editor.model;
 
@@ -46,25 +49,27 @@ export default class InsertHtmlEmbedCommand extends Command {
 	}
 }
 
-// Checks if the `htmlEmbed` element can be inserted at the current model selection.
+// Checks if the `iframeEmbed` element can be inserted at the current model selection.
 //
 // @param {module:engine/model/model~Model} model
 // @returns {Boolean}
-function isHtmlEmbedAllowed( model ) {
+function isIframeEmbedAllowed( model ) {
 	const schema = model.schema;
 	const selection = model.document.selection;
 
-	return isHtmlEmbedAllowedInParent( selection, schema, model ) &&
-		!checkSelectionOnObject( selection, schema );
+	return (
+		isIframeEmbedAllowedInParent( selection, schema, model ) &&
+    !checkSelectionOnObject( selection, schema )
+	);
 }
 
-// Checks if an HTML embed is allowed by the schema in the optimal insertion parent.
+// Checks if an iframe embed is allowed by the schema in the optimal insertion parent.
 //
 // @param {module:engine/model/selection~Selection|module:engine/model/documentselection~DocumentSelection} selection
 // @param {module:engine/model/schema~Schema} schema
 // @param {module:engine/model/model~Model} model Model instance.
 // @returns {Boolean}
-function isHtmlEmbedAllowedInParent( selection, schema, model ) {
+function isIframeEmbedAllowedInParent( selection, schema, model ) {
 	const parent = getInsertPageBreakParent( selection, model );
 
 	return schema.checkChild( parent, 'rawHtml' );

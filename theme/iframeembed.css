@@ -5,12 +5,13 @@
 
 /* The feature container. */
 .ck-widget.raw-html-embed {
-	--ck-html-embed-source-height: initial;
-	--ck-html-embed-source-width: calc(100% - var(--ck-icon-size) * 2.75);
+	--ck-iframe-embed-source-height: initial;
+	--ck-iframe-embed-source-width: calc(100% - var(--ck-icon-size) * 2.75);
 
 	& .raw-html-embed__source {
+		height: var(--ck-iframe-embed-source-height);
 		&:not(:disabled) {
-			width: var(--ck-html-embed-source-width);
+			width: var(--ck-iframe-embed-source-width);
 		}
 	}
 

@@ -4,26 +4,26 @@
  */
 
 /**
- * @module html-embed/updatehtmlembedcommand
+ * @module iframe-embed/updateiframeembedcommand
  */
 
 import { Command } from 'ckeditor5/src/core';
 
 /**
- * The update HTML embed value command.
+ * The update iframe embed value command.
  *
- * The command is registered by {@link module:html-embed/htmlembedediting~HtmlEmbedEditing} as `'updateHtmlEmbed'`.
+ * The command is registered by {@link module:iframe-embed/iframeembedediting~IframeEmbedEditing} as `'updateIframeEmbed'`.
  *
- * To update the value of the HTML embed element at the current selection, execute the command:
+ * To update the value of the iframe embed element at the current selection, execute the command:
  *
- *		editor.execute( 'updateHtmlEmbed', '<b>HTML.</b>' );
+ *		editor.execute( 'updateIframeEmbed', '<b>iframe.</b>' );
  *
  * @extends module:core/command~Command
  */
-export default class UpdateHtmlEmbedCommand extends Command {
+export default class UpdateIframeEmbedCommand extends Command {
 	/**
-	 * @inheritDoc
-	 */
+   * @inheritDoc
+   */
 	refresh() {
 		const model = this.editor.model;
 		const selection = model.document.selection;
@@ -33,11 +33,11 @@ export default class UpdateHtmlEmbedCommand extends Command {
 	}
 
 	/**
-	 * Executes the command, which updates the `value` attribute of the embedded HTML element:
-	 *
-	 * @fires execute
-	 * @param {String} value HTML as a string.
-	 */
+   * Executes the command, which updates the `value` attribute of the embedded iframe element:
+   *
+   * @fires execute
+   * @param {String} value iframe as a string.
+   */
 	execute( value ) {
 		const model = this.editor.model;
 		const selection = model.document.selection;
@@ -49,7 +49,7 @@ export default class UpdateHtmlEmbedCommand extends Command {
 	}
 }
 
-// Returns the selected HTML embed element in the model, if any.
+// Returns the selected iframe embed element in the model, if any.
 //
 // @param {module:engine/model/selection~Selection} selection
 // @returns {module:engine/model/element~Element|null}

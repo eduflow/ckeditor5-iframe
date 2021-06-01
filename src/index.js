@@ -4,15 +4,15 @@
  */
 
 /**
- * @module html-embed
+ * @module iframe-embed
  */
 
-import HtmlEmbed from './htmlembed';
-import HtmlEmbedEditing from './htmlembedediting';
-import HtmlEmbedUI from './htmlembedui';
+import IframeEmbed from './iframeembed';
+import IframeEmbedEditing from './iframeembedediting';
+import IframeEmbedUI from './iframeembedui';
 
 export default {
-	HtmlEmbed,
-	HtmlEmbedEditing,
-	HtmlEmbedUI
+	IframeEmbed,
+	IframeEmbedEditing,
+	IframeEmbedUI
 };

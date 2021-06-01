@@ -4,7 +4,7 @@
  */
 
 /**
- * @module html-embed/htmlembedediting
+ * @module iframe-embed/iframeembedediting
  */
 
 import { Plugin, icons } from 'ckeditor5/src/core';
@@ -12,23 +12,23 @@ import { ButtonView } from 'ckeditor5/src/ui';
 import { toWidget } from 'ckeditor5/src/widget';
 import { logWarning, createElement } from 'ckeditor5/src/utils';
 
-import InsertHtmlEmbedCommand from './inserthtmlembedcommand';
-import UpdateHtmlEmbedCommand from './updatehtmlembedcommand';
+import InsertIframeEmbedCommand from './insertiframeembedcommand';
+import UpdateIframeEmbedCommand from './updateiframeembedcommand';
 
 import '@ckeditor/ckeditor5-theme-lark/theme/ckeditor5-html-embed/htmlembed.css';
-import '../theme/htmlembed.css';
+import '../theme/iframeembed.css';
 
 /**
- * The HTML embed editing feature.
+ * The iframe embed editing feature.
  *
  * @extends module:core/plugin~Plugin
  */
-export default class HtmlEmbedEditing extends Plugin {
+export default class IframeEmbedEditing extends Plugin {
 	/**
 	 * @inheritDoc
 	 */
 	static get pluginName() {
-		return 'HtmlEmbedEditing';
+		return 'IframeEmbedEditing';
 	}
 
 	/**
@@ -37,18 +37,18 @@ export default class HtmlEmbedEditing extends Plugin {
 	constructor( editor ) {
 		super( editor );
 
-		editor.config.define( 'htmlEmbed', {
+		editor.config.define( 'iframeEmbed', {
 			showPreviews: false,
 			sanitizeHtml: rawHtml => {
 				/**
-				 * When using the HTML embed feature with the `htmlEmbed.showPreviews=true` option, it is strongly recommended to
-				 * define a sanitize function that will clean up the input HTML in order to avoid XSS vulnerability.
+				 * When using the iframe embed feature with the `iframeEmbed.showPreviews=true` option, it is strongly recommended to
+				 * define a sanitize function that will clean up the input iframe in order to avoid XSS vulnerability.
 				 *
-				 * For a detailed overview, check the {@glink features/html-embed HTML embed feature} documentation.
+				 * For a detailed overview, check the {@glink features/iframe-embed iframe embed feature} documentation.
 				 *
-				 * @error html-embed-provide-sanitize-function
+				 * @error iframe-embed-provide-sanitize-function
 				 */
-				logWarning( 'html-embed-provide-sanitize-function' );
+				logWarning( 'iframe-embed-provide-sanitize-function' );
 
 				return {
 					html: rawHtml,
@@ -71,8 +71,14 @@ export default class HtmlEmbedEditing extends Plugin {
 			allowAttributes: [ 'value' ]
 		} );
 
-		editor.commands.add( 'updateHtmlEmbed', new UpdateHtmlEmbedCommand( editor ) );
-		editor.commands.add( 'insertHtmlEmbed', new InsertHtmlEmbedCommand( editor ) );
+		editor.commands.add(
+			'updateIframeEmbed',
+			new UpdateIframeEmbedCommand( editor )
+		);
+		editor.commands.add(
+			'insertIframeEmbed',
+			new InsertIframeEmbedCommand( editor )
+		);
 
 		this._setupConversion();
 	}
@@ -87,7 +93,7 @@ export default class HtmlEmbedEditing extends Plugin {
 		const t = editor.t;
 		const view = editor.editing.view;
 
-		const htmlEmbedConfig = editor.config.get( 'htmlEmbed' );
+		const iframeEmbedConfig = editor.config.get( 'iframeEmbed' );
 
 		editor.conversion.for( 'upcast' ).elementToElement( {
 			view: {
@@ -107,8 +113,13 @@ export default class HtmlEmbedEditing extends Plugin {
 			model: 'rawHtml',
 			view: ( modelElement, { writer } ) => {
 				const url = modelElement.getAttribute( 'value' ) || '';
-				const embedElement = writer.createContainerElement( 'div', { class: 'raw-html-embed' } );
-				writer.insert( writer.createPositionAt( embedElement, 0 ), writer.createRawElement( 'iframe', { src: url } ) );
+				const embedElement = writer.createContainerElement( 'div', {
+					class: 'raw-html-embed'
+				} );
+				writer.insert(
+					writer.createPositionAt( embedElement, 0 ),
+					writer.createRawElement( 'iframe', { src: url } )
+				);
 				return embedElement;
 			}
 		} );
@@ -129,40 +140,60 @@ export default class HtmlEmbedEditing extends Plugin {
 
 				// Widget cannot be a raw element because the widget system would not be able
 				// to add its UI to it. Thus, we need this wrapper.
-				const viewContentWrapper = writer.createRawElement( 'div', {
-					class: 'raw-html-embed__content-wrapper'
-				}, function( domElement ) {
-					domContentWrapper = domElement;
+				const viewContentWrapper = writer.createRawElement(
+					'div',
+					{
+						class: 'raw-html-embed__content-wrapper'
+					},
+					function( domElement ) {
+						domContentWrapper = domElement;
 
-					renderContent( { domElement, editor, state, props } );
+						renderContent( { domElement, editor, state, props } );
 
-					// Since there is a `data-cke-ignore-events` attribute set on the wrapper element in the editable mode,
-					// the explicit `mousedown` handler on the `capture` phase is needed to move the selection onto the whole
-					// HTML embed widget.
-					domContentWrapper.addEventListener( 'mousedown', () => {
-						if ( state.isEditable ) {
-							const model = editor.model;
-							const selectedElement = model.document.selection.getSelectedElement();
+						// Since there is a `data-cke-ignore-events` attribute set on the wrapper element in the editable mode,
+						// the explicit `mousedown` handler on the `capture` phase is needed to move the selection onto the whole
+						// iframe embed widget.
+						domContentWrapper.addEventListener(
+							'mousedown',
+							() => {
+								if ( state.isEditable ) {
+									const model = editor.model;
+									const selectedElement =
+										model.document.selection.getSelectedElement();
 
-							// Move the selection onto the whole HTML embed widget if it's currently not selected.
-							if ( selectedElement !== modelElement ) {
-								model.change( writer => writer.setSelection( modelElement, 'on' ) );
-							}
-						}
-					}, true );
-				} );
+									// Move the selection onto the whole iframe embed widget if it's currently not selected.
+									if ( selectedElement !== modelElement ) {
+										model.change( writer =>
+											writer.setSelection( modelElement, 'on' )
+										);
+									}
+								}
+							},
+							true
+						);
+					}
+				);
 
-				// API exposed on each raw HTML embed widget so other features can control a particular widget.
+				// API exposed on each raw iframe embed widget so other features can control a particular widget.
 				const rawHtmlApi = {
 					makeEditable() {
 						state = Object.assign( {}, state, {
 							isEditable: true
 						} );
 
-						renderContent( { domElement: domContentWrapper, editor, state, props } );
+						renderContent( {
+							domElement: domContentWrapper,
+							editor,
+							state,
+							props
+						} );
 
 						view.change( writer => {
-							writer.setAttribute( 'data-cke-ignore-events', 'true', viewContentWrapper );
+							writer.setAttribute(
+								'data-cke-ignore-events',
+								'true',
+								viewContentWrapper
+							);
 						} );
 
 						// This could be potentially pulled to a separate method called focusTextarea().
@@ -172,7 +203,7 @@ export default class HtmlEmbedEditing extends Plugin {
 						// If the value didn't change, we just cancel. If it changed,
 						// it's enough to update the model – the entire widget will be reconverted.
 						if ( newValue !== state.getRawHtmlValue() ) {
-							editor.execute( 'updateHtmlEmbed', newValue );
+							editor.execute( 'updateIframeEmbed', newValue );
 							editor.editing.view.focus();
 						} else {
 							this.cancel();
@@ -183,23 +214,31 @@ export default class HtmlEmbedEditing extends Plugin {
 							isEditable: false
 						} );
 
-						renderContent( { domElement: domContentWrapper, editor, state, props } );
+						renderContent( {
+							domElement: domContentWrapper,
+							editor,
+							state,
+							props
+						} );
 						editor.editing.view.focus();
 
 						view.change( writer => {
-							writer.removeAttribute( 'data-cke-ignore-events', viewContentWrapper );
+							writer.removeAttribute(
+								'data-cke-ignore-events',
+								viewContentWrapper
+							);
 						} );
 					}
 				};
 
 				state = {
-					showPreviews: htmlEmbedConfig.showPreviews,
+					showPreviews: iframeEmbedConfig.showPreviews,
 					isEditable: false,
 					getRawHtmlValue: () => modelElement.getAttribute( 'value' ) || ''
 				};
 
 				props = {
-					sanitizeHtml: htmlEmbedConfig.sanitizeHtml,
+					sanitizeHtml: iframeEmbedConfig.sanitizeHtml,
 					textareaPlaceholder: t( 'Paste in https://...' ),
 
 					onEditClick() {
@@ -213,7 +252,10 @@ export default class HtmlEmbedEditing extends Plugin {
 					}
 				};
 
-				writer.insert( writer.createPositionAt( viewContainer, 0 ), viewContentWrapper );
+				writer.insert(
+					writer.createPositionAt( viewContainer, 0 ),
+					viewContentWrapper
+				);
 
 				writer.setCustomProperty( 'rawHtmlApi', rawHtmlApi, viewContainer );
 				writer.setCustomProperty( 'rawHtml', true, viewContainer );
@@ -238,7 +280,11 @@ export default class HtmlEmbedEditing extends Plugin {
 					placeholder: props.textareaPlaceholder
 				};
 
-				domTextarea = createDomTextarea( { domDocument, state, props: textareaProps } );
+				domTextarea = createDomTextarea( {
+					domDocument,
+					state,
+					props: textareaProps
+				} );
 
 				domElement.append( domTextarea );
 			} else if ( state.showPreviews ) {
@@ -246,14 +292,23 @@ export default class HtmlEmbedEditing extends Plugin {
 					sanitizeHtml: props.sanitizeHtml
 				};
 
-				domElement.append( createPreviewContainer( { domDocument, state, props: previewContainerProps, editor } ) );
+				domElement.append(
+					createPreviewContainer( {
+						domDocument,
+						state,
+						props: previewContainerProps,
+						editor
+					} )
+				);
 			} else {
 				const textareaProps = {
 					isDisabled: true,
 					placeholder: props.textareaPlaceholder
 				};
 
-				domElement.append( createDomTextarea( { domDocument, state, props: textareaProps } ) );
+				domElement.append(
+					createDomTextarea( { domDocument, state, props: textareaProps } )
+				);
 			}
 
 			const buttonsWrapperProps = {
@@ -263,7 +318,14 @@ export default class HtmlEmbedEditing extends Plugin {
 				},
 				onCancelClick: props.onCancelClick
 			};
-			domElement.prepend( createDomButtonsWrapper( { editor, domDocument, state, props: buttonsWrapperProps } ) );
+			domElement.prepend(
+				createDomButtonsWrapper( {
+					editor,
+					domDocument,
+					state,
+					props: buttonsWrapperProps
+				} )
+			);
 		}
 
 		function createDomButtonsWrapper( { editor, domDocument, state, props } ) {
@@ -281,12 +343,12 @@ export default class HtmlEmbedEditing extends Plugin {
 
 				clonedDomSaveButton.addEventListener( 'click', evt => {
 					evt.preventDefault();
-					props.onSaveClick( );
+					props.onSaveClick();
 				} );
 
 				clonedDomCancelButton.addEventListener( 'click', evt => {
 					evt.preventDefault();
-					props.onCancelClick( );
+					props.onCancelClick();
 				} );
 
 				domButtonsWrapper.appendChild( clonedDomSaveButton );
@@ -320,26 +382,35 @@ export default class HtmlEmbedEditing extends Plugin {
 
 		function createPreviewContainer( { domDocument, state, props, editor } ) {
 			const sanitizedOutput = props.sanitizeHtml( state.getRawHtmlValue() );
-			const placeholderText = state.getRawHtmlValue().length > 0 ?
-				t( 'No preview available' ) :
-				t( 'Empty embed content' );
+			const placeholderText =
+				state.getRawHtmlValue().length > 0 ?
+					t( 'No preview available' ) :
+					t( 'Empty embed content' );
 
-			const domPreviewPlaceholder = createElement( domDocument, 'div', {
-				class: 'ck ck-reset_all raw-html-embed__preview-placeholder'
-			}, placeholderText );
+			const domPreviewPlaceholder = createElement(
+				domDocument,
+				'div',
+				{
+					class: 'ck ck-reset_all raw-html-embed__preview-placeholder'
+				},
+				placeholderText
+			);
 
 			const domPreviewContent = createElement( domDocument, 'div', {
 				class: 'raw-html-embed__preview-content',
 				dir: editor.locale.contentLanguageDirection
 			} );
 
-			domPreviewContent.innerHTML = sanitizedOutput.html;
+			domPreviewContent.inneriframe = sanitizedOutput.html;
 
-			const domPreviewContainer = createElement( domDocument, 'div', {
-				class: 'raw-html-embed__preview'
-			}, [
-				domPreviewPlaceholder, domPreviewContent
-			] );
+			const domPreviewContainer = createElement(
+				domDocument,
+				'div',
+				{
+					class: 'raw-html-embed__preview'
+				},
+				[ domPreviewPlaceholder, domPreviewContent ]
+			);
 
 			return domPreviewContainer;
 		}
@@ -350,11 +421,11 @@ export default class HtmlEmbedEditing extends Plugin {
 //
 //	@param {module:utils/locale~Locale} locale Editor locale.
 //	@param {'edit'|'save'|'cancel'} type Type of button to create.
-//	@returns {HTMLElement}
+//	@returns {iframeElement}
 function createDomButton( editor, type ) {
 	const t = editor.locale.t;
 	const buttonView = new ButtonView( editor.locale );
-	const command = editor.commands.get( 'updateHtmlEmbed' );
+	const command = editor.commands.get( 'updateIframeEmbed' );
 
 	buttonView.set( {
 		tooltipPosition: editor.locale.uiLanguageDirection === 'rtl' ? 'e' : 'w',

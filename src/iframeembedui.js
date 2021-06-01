@@ -4,42 +4,42 @@
  */
 
 /**
- * @module html-embed/htmlembedui
+ * @module iframe-embed/iframeembedui
  */
 
 import { Plugin } from 'ckeditor5/src/core';
 import { ButtonView } from 'ckeditor5/src/ui';
 
-import htmlEmbedIcon from '../theme/icons/html.svg';
+import iframeEmbedIcon from '../theme/icons/iframe.svg';
 
 /**
- * The HTML embed UI plugin.
+ * The iframe embed UI plugin.
  *
  * @extends module:core/plugin~Plugin
  */
-export default class HtmlEmbedUI extends Plugin {
+export default class IframeEmbedUI extends Plugin {
 	/**
-	 * @inheritDoc
-	 */
+   * @inheritDoc
+   */
 	static get pluginName() {
-		return 'HtmlEmbedUI';
+		return 'IframeEmbedUI';
 	}
 
 	/**
-	 * @inheritDoc
-	 */
+   * @inheritDoc
+   */
 	init() {
 		const editor = this.editor;
 		const t = editor.t;
 
-		// Add the `htmlEmbed` button to feature components.
-		editor.ui.componentFactory.add( 'htmlEmbed', locale => {
-			const command = editor.commands.get( 'insertHtmlEmbed' );
+		// Add the `iframeEmbed` button to feature components.
+		editor.ui.componentFactory.add( 'iframeEmbed', locale => {
+			const command = editor.commands.get( 'insertIframeEmbed' );
 			const view = new ButtonView( locale );
 
 			view.set( {
-				label: t( 'Insert HTML' ),
-				icon: htmlEmbedIcon,
+				label: t( 'Insert iframe' ),
+				icon: iframeEmbedIcon,
 				tooltip: true
 			} );
 
@@ -47,10 +47,11 @@ export default class HtmlEmbedUI extends Plugin {
 
 			// Execute the command.
 			this.listenTo( view, 'execute', () => {
-				editor.execute( 'insertHtmlEmbed' );
+				editor.execute( 'insertIframeEmbed' );
 				editor.editing.view.focus();
 
-				const widgetWrapper = editor.editing.view.document.selection.getSelectedElement();
+				const widgetWrapper =
+          editor.editing.view.document.selection.getSelectedElement();
 
 				widgetWrapper.getCustomProperty( 'rawHtmlApi' ).makeEditable();
 			} );

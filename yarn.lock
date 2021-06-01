@@ -398,9 +398,9 @@
   dependencies:
     ckeditor5 "^27.1.0"
 
-"@ckeditor/ckeditor5-html-embed@^27.1.0":
+"@ckeditor/ckeditor5-iframe-embed@^27.1.0":
   version "27.1.0"
-  resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-html-embed/-/ckeditor5-html-embed-27.1.0.tgz#1eb7a331f3a2c416e365346980e358fe8546afca"
+  resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-iframe-embed/-/ckeditor5-iframe-embed-27.1.0.tgz#1eb7a331f3a2c416e365346980e358fe8546afca"
   integrity sha512-GX7BKYforRXVBp93Dgy35cR05i8tgwwwEdk0wJxUKswGAbXH2X39rhsxx/crxVUFa/uOzmIaYQbWALBxw9w1Yw==
   dependencies:
     ckeditor5 "^27.1.0"
@@ -509,7 +509,7 @@
     "@ckeditor/ckeditor5-font" "^27.1.0"
     "@ckeditor/ckeditor5-heading" "^27.1.0"
     "@ckeditor/ckeditor5-highlight" "^27.1.0"
-    "@ckeditor/ckeditor5-html-embed" "^27.1.0"
+    "@ckeditor/ckeditor5-iframe-embed" "^27.1.0"
     "@ckeditor/ckeditor5-indent" "^27.1.0"
     "@ckeditor/ckeditor5-link" "^27.1.0"
     "@ckeditor/ckeditor5-list" "^27.1.0"

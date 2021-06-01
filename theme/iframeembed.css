@@ -4,11 +4,11 @@
  */
 
 /* The feature container. */
-.ck-widget.raw-html-embed {
+.ck-widget.iframe-embed {
 	--ck-iframe-embed-source-height: initial;
 	--ck-iframe-embed-source-width: calc(100% - var(--ck-icon-size) * 2.75);
 
-	& .raw-html-embed__source {
+	& .iframe-embed__source {
 		height: var(--ck-iframe-embed-source-height);
 		&:not(:disabled) {
 			width: var(--ck-iframe-embed-source-width);
@@ -32,19 +32,19 @@
 	/* ----- Emebed internals --------------------------------------------------------------------- */
 
 	/* The switch mode button wrapper. */
-	& .raw-html-embed__buttons-wrapper {
+	& .iframe-embed__buttons-wrapper {
 		position: absolute;
 		display: flex;
 		flex-direction: row;
 	}
 
-	& .raw-html-embed__preview {
+	& .iframe-embed__preview {
 		position: relative;
 		overflow: hidden;
 		display: flex;
 	}
 
-	& .raw-html-embed__preview-content {
+	& .iframe-embed__preview-content {
 		width: 100%;
 		position: relative;
 		margin: auto;
@@ -55,7 +55,7 @@
 		border-spacing: 7px;
 	}
 
-	& .raw-html-embed__preview-placeholder {
+	& .iframe-embed__preview-placeholder {
 		position: absolute;
 		left: 0;
 		top: 0;
@@ -68,7 +68,7 @@
 	}
 }
 
-.ck-content .raw-html-embed {
+.ck-content .iframe-embed {
 	/* Give the embed some air. */
 	margin: 1em auto;
 

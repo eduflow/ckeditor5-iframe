@@ -15,7 +15,7 @@ import { logWarning, createElement } from 'ckeditor5/src/utils';
 import InsertIframeEmbedCommand from './insertiframeembedcommand';
 import UpdateIframeEmbedCommand from './updateiframeembedcommand';
 
-import '@ckeditor/ckeditor5-theme-lark/theme/ckeditor5-html-embed/htmlembed.css';
+import '../theme/lark.css';
 import '../theme/iframeembed.css';
 
 /**
@@ -98,10 +98,10 @@ export default class IframeEmbedEditing extends Plugin {
 		editor.conversion.for( 'upcast' ).elementToElement( {
 			view: {
 				name: 'div',
-				classes: 'raw-html-embed'
+				classes: 'iframe-embed'
 			},
 			model: ( viewElement, { writer } ) => {
-				// The div.raw-html-embed is registered as a raw content element,
+				// The div.iframe-embed is registered as a raw content element,
 				// so all it's content is available in a custom property.
 				return writer.createElement( 'rawHtml', {
 					value: viewElement.getChild( 0 ).getAttribute( 'src' )
@@ -114,7 +114,7 @@ export default class IframeEmbedEditing extends Plugin {
 			view: ( modelElement, { writer } ) => {
 				const url = modelElement.getAttribute( 'value' ) || '';
 				const embedElement = writer.createContainerElement( 'div', {
-					class: 'raw-html-embed'
+					class: 'iframe-embed'
 				} );
 				writer.insert(
 					writer.createPositionAt( embedElement, 0 ),
@@ -133,8 +133,8 @@ export default class IframeEmbedEditing extends Plugin {
 				let domContentWrapper, state, props;
 
 				const viewContainer = writer.createContainerElement( 'div', {
-					class: 'raw-html-embed',
-					'data-html-embed-label': t( 'Embed link' ),
+					class: 'iframe-embed',
+					'data-iframe-embed-label': t( 'Embed link' ),
 					dir: editor.locale.uiLanguageDirection
 				} );
 
@@ -143,7 +143,7 @@ export default class IframeEmbedEditing extends Plugin {
 				const viewContentWrapper = writer.createRawElement(
 					'div',
 					{
-						class: 'raw-html-embed__content-wrapper'
+						class: 'iframe-embed__content-wrapper'
 					},
 					function( domElement ) {
 						domContentWrapper = domElement;
@@ -330,7 +330,7 @@ export default class IframeEmbedEditing extends Plugin {
 
 		function createDomButtonsWrapper( { editor, domDocument, state, props } ) {
 			const domButtonsWrapper = createElement( domDocument, 'div', {
-				class: 'raw-html-embed__buttons-wrapper'
+				class: 'iframe-embed__buttons-wrapper'
 			} );
 			// TODO these should be cached and we should only clone here these cached nodes!
 			const domEditButton = createDomButton( editor, 'edit' );
@@ -371,7 +371,7 @@ export default class IframeEmbedEditing extends Plugin {
 			const domTextarea = createElement( domDocument, 'input', {
 				type: 'url',
 				placeholder: props.placeholder,
-				class: 'ck ck-reset ck-input ck-input-text raw-html-embed__source'
+				class: 'ck ck-reset ck-input ck-input-text iframe-embed__source'
 			} );
 
 			domTextarea.disabled = props.isDisabled;
@@ -391,13 +391,13 @@ export default class IframeEmbedEditing extends Plugin {
 				domDocument,
 				'div',
 				{
-					class: 'ck ck-reset_all raw-html-embed__preview-placeholder'
+					class: 'ck ck-reset_all iframe-embed__preview-placeholder'
 				},
 				placeholderText
 			);
 
 			const domPreviewContent = createElement( domDocument, 'div', {
-				class: 'raw-html-embed__preview-content',
+				class: 'iframe-embed__preview-content',
 				dir: editor.locale.contentLanguageDirection
 			} );
 
@@ -407,7 +407,7 @@ export default class IframeEmbedEditing extends Plugin {
 				domDocument,
 				'div',
 				{
-					class: 'raw-html-embed__preview'
+					class: 'iframe-embed__preview'
 				},
 				[ domPreviewPlaceholder, domPreviewContent ]
 			);
@@ -439,20 +439,20 @@ function createDomButton( editor, type ) {
 		buttonView.set( {
 			icon: icons.pencil,
 			label: t( 'Edit link' ),
-			class: 'raw-html-embed__edit-button'
+			class: 'iframe-embed__edit-button'
 		} );
 	} else if ( type === 'save' ) {
 		buttonView.set( {
 			icon: icons.check,
 			label: t( 'Save changes' ),
-			class: 'raw-html-embed__save-button'
+			class: 'iframe-embed__save-button'
 		} );
 		buttonView.bind( 'isEnabled' ).to( command, 'isEnabled' );
 	} else {
 		buttonView.set( {
 			icon: icons.cancel,
 			label: t( 'Cancel' ),
-			class: 'raw-html-embed__cancel-button'
+			class: 'iframe-embed__cancel-button'
 		} );
 	}
 

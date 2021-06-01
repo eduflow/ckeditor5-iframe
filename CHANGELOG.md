@@ -1,5 +1,9 @@
 # Changelog
 
+## current
+
+- Rename `(raw-)html-embed` -> `iframe-embed`
+
 ## [27.1.0-next.5](https://github.com/eduflow/ckeditor5-iframe/compare/v27.1.0-next.4...v27.1.0-next.5)
 
 - Changes via rebase 

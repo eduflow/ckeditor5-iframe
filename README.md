@@ -42,9 +42,9 @@ ClassicEditor.create(document.querySelector("#editor"), {
 ## Input format
 
 ```html
-<div class="raw-html-embed">
+<figure class="iframe-embed">
   <iframe src="https://www.google.com">
-</div>
+</figure>
 ```
 
 ## Development

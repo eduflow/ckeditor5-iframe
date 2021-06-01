@@ -1,5 +1,9 @@
 # Changelog
 
+## [27.1.0-next.5](https://github.com/eduflow/ckeditor5-iframe/compare/v27.1.0-next.4...v27.1.0-next.5)
+
+- Changes via rebase 
+
 ## [27.1.0-next.4](https://github.com/eduflow/ckeditor5-iframe/compare/v27.1.0-next.3...v27.1.0-next.4)
 
 - Update README w/ screenshots, instructions, examples.

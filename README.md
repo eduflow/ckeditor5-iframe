@@ -74,6 +74,10 @@ To boot up a development loop, clone the repo, install the packages via `yarn`, 
 
 ![Dev environment](/screenshots/dev.png?raw=true "Screenshot of dev environment")
 
+From here, you can customize `demo/`'s `app.js` and `index.html` as well as
+files inside `src/` (the plugin code itself) and files will be automatically
+rebuilt. You still may need to refresh.
+
 The `window.editor` can access the
 [`ClassicEditor`](https://ckeditor.com/docs/ckeditor5/latest/api/module_editor-classic_classiceditor-ClassicEditor.html) object, e.g. `editor.getData()` can retrieve the output HTML.
 

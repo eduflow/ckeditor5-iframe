@@ -7,6 +7,8 @@
 .ck-widget.iframe-embed {
 	--ck-iframe-embed-source-height: initial;
 	--ck-iframe-embed-source-width: calc(100% - var(--ck-icon-size) * 2.75);
+	--ck-iframe-embed-content-min-height: 20rem;
+	--ck-iframe-embed-content-min-width: initial;
 
 	& .iframe-embed__source {
 		height: var(--ck-iframe-embed-source-height);
@@ -42,12 +44,19 @@
 		position: relative;
 		overflow: hidden;
 		display: flex;
+		min-height: var(--ck-iframe-embed-content-min-height);
+		min-width: var(--ck-iframe-embed-content-min-width);
 	}
 
 	& .iframe-embed__preview-content {
 		width: 100%;
-		position: relative;
+		height: 100%;
+		position: absolute;
 		margin: auto;
+		& iframe {
+			width: 100%;
+			height: 100%;
+		}
 
 		/* Gives spacing to the small renderable elements, so they always cover the placeholder. */
 		display: table;

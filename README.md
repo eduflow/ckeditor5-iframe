@@ -39,6 +39,24 @@ ClassicEditor.create(document.querySelector("#editor"), {
 });
 ```
 
+### Show previews
+
+Passing `true` to `iframeEmbed.showPreviews` will enable previewing.
+
+```js
+import IframeEmbed from "ckeditor5-iframe/src/iframeembed";
+
+ClassicEditor.create(document.querySelector("#editor"), {
+  plugins: [Essentials, Paragraph, Bold, Italic, IframeEmbed],
+  toolbar: ["bold", "italic", "iframeEmbed"],
+  iframeEmbed: {
+    showPreviews: true,
+  },
+});
+```
+
+The minimum dimensions are tweakable via [CSS variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties) `--ck-iframe-embed-content-min-height` and `--ck-iframe-embed-content-min-width`.
+
 ## Input format
 
 ```html

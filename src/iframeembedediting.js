@@ -401,7 +401,7 @@ export default class IframeEmbedEditing extends Plugin {
 				dir: editor.locale.contentLanguageDirection
 			} );
 
-			domPreviewContent.inneriframe = sanitizedOutput.html;
+			domPreviewContent.innerHTML = `<iframe src="${ sanitizedOutput.html }"></iframe>`;
 
 			const domPreviewContainer = createElement(
 				domDocument,

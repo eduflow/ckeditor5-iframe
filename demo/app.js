@@ -10,6 +10,9 @@ import IframeEmbed from "../src/iframeembed";
 ClassicEditor.create(document.querySelector("#editor"), {
   plugins: [Essentials, Paragraph, Bold, Italic, IframeEmbed],
   toolbar: ["bold", "italic", "iframeEmbed"],
+  iframeEmbed: {
+    showPreviews: true
+  }
 })
   .then((editor) => {
     console.log("Editor was initialized", editor);

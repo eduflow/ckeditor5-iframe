@@ -41,6 +41,9 @@ ClassicEditor.create(document.querySelector("#editor"), {
 
 ### Show previews
 
+![Preview option](/screenshots/preview.png?raw=true "Screenshot of the in-editor
+preview")
+
 Passing `true` to `iframeEmbed.showPreviews` will enable previewing.
 
 ```js

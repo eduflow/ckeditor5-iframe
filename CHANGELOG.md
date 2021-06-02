@@ -1,5 +1,12 @@
 # Changelog
 
+## [27.1.0-next.9](https://github.com/eduflow/ckeditor5-iframe/compare/v27.1.0-next.8...v27.1.0-next.9)
+
+- Support for `showPreview: true`
+- README: Compress images, document `showPreviews`, highlight usefulness of
+  rebuilds in the developer loop
+- Dev watcher: Default fonts, larger width, iframe-friendly examples
+
 ## [27.1.0-next.8](https://github.com/eduflow/ckeditor5-iframe/compare/v27.1.0-next.7...v27.1.0-next.8)
 
 - [internal] Rename `rawHtml` -> `iframe`

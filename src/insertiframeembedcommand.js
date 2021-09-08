@@ -9,8 +9,7 @@
 
 import { Command } from 'ckeditor5/src/core';
 import {
-	findOptimalInsertionPosition,
-	checkSelectionOnObject
+	findOptimalInsertionRange
 } from 'ckeditor5/src/widget';
 
 /**
@@ -57,10 +56,7 @@ function isIframeEmbedAllowed( model ) {
 	const schema = model.schema;
 	const selection = model.document.selection;
 
-	return (
-		isIframeEmbedAllowedInParent( selection, schema, model ) &&
-    !checkSelectionOnObject( selection, schema )
-	);
+	return isIframeEmbedAllowedInParent( selection, schema, model );
 }
 
 // Checks if an iframe embed is allowed by the schema in the optimal insertion parent.
@@ -81,9 +77,9 @@ function isIframeEmbedAllowedInParent( selection, schema, model ) {
 // @param {module:engine/model/model~Model} model Model instance.
 // @returns {module:engine/model/element~Element}
 function getInsertPageBreakParent( selection, model ) {
-	const insertAt = findOptimalInsertionPosition( selection, model );
+	const insertAt = findOptimalInsertionRange( selection, model );
 
-	const parent = insertAt.parent;
+	const parent = insertAt.end.parent;
 
 	if ( parent.isEmpty && !parent.is( 'element', '$root' ) ) {
 		return parent.parent;
